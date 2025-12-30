@@ -1,3 +1,68 @@
+<?php
+require_once __DIR__ . '/../config/database.php';
+$errors = [];
+$pdo = getConnection();
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+    $nom =trim($_POST['nom'] ?? '');
+    $prenom = trim($_POST['prenom'] ?? '');
+    $email = trim($_POST['email']?? '');
+    $telephone = trim($_POST['telephone']?? '');
+    $class = trim($_POST['class']?? '');
+    $date_naissance = trim($_POST['date_naissance']?? '');
+
+    if (empty($nom))
+    {
+      $errors[] = "Le nom est obligatoire.";
+    }
+    if (empty($prenom))
+    {
+        $errors[] = "il faut entrer un valide nom";
+    }
+    if (empty($email)) 
+    {
+     $errors[] = "L'email est obligatoire.";
+  }
+    if (!filter_var($email,FILTER_VALIDATE_EMAIL))
+    {
+        $errors[] = "l'email est invalide";
+    }
+    if (empty($class))
+    {
+        $errors[] = "il faut entrer un valide nom";
+    }
+    if (empty($date_naissance))
+    {
+        $errors[] = "il faut entrer un valide nom";
+    }
+
+    if(empty($errors))
+    {
+         try {
+            $sql = "INSERT INTO etudiants (nom, prenom, email, telephone, classe, date_naissance)";
+            
+            $stmt = $pdo->prepare($sql);
+            
+             $stmt->execute([
+                 ':nom' => $nom,
+                 ':prenom' => $prenom,
+                 ':email' => $email,
+                 ':telephone' => $telephone,
+                 ':classe' => $classe,
+                 ':date_naissance' => $date_naissance
+             ]);
+             header('Location: ../index.php');
+             exit;
+         } catch (PDOException $e) {
+             if ($e->getCode() == 23000) {
+                 $errors[] = "Cet email est déjà utilisé par un autre étudiant.";
+             } else {
+                 $errors[] = "Erreur lors de l'enregistrement : " . $e->getMessage();
+             }
+         }
+     }
+ }
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

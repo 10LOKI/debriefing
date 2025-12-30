@@ -1,3 +1,9 @@
+<?php
+require_once __DIR__ . "/config/database.php";
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -68,23 +74,6 @@
                         <a href="etudiants/ajouter_etudiant.php?id=1" class="btn btn-sm btn-warning">Modifier</a>
                         <form method="POST" action="etudiants/supprimer_etudiant.php" style="display:inline;">
                             <input type="hidden" name="id" value="1">
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer cet étudiant ?');">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Martin Claire</td>
-                    <td>claire.martin@example.com</td>
-                    <td>Première S</td>
-                    <td>2</td>
-                    <td>12.50</td>
-                    <td>10 / 15</td>
-                    <td>
-                        
-                        <a href="etudiants/ajouter_etudiant.php?id=2" class="btn btn-sm btn-warning">Modifier</a>
-                        <form method="POST" action="etudiants/supprimer_etudiant.php" style="display:inline;">
-                            <input type="hidden" name="id" value="2">
                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer cet étudiant ?');">Supprimer</button>
                         </form>
                     </td>
